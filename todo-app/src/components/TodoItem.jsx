@@ -1,6 +1,6 @@
-function TodoItem1() {
-  let todoName= 'Go to College';
-  let todoDate= '16/01/2024';
+/* eslint-disable react/prop-types */
+
+function TodoItem1({todoName, todoDate}) {
   return (
     <div className="container">
       <div className="row rg-row">
