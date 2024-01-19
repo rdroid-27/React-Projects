@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import styles from "./ButtonContainer.module.css";
-const ButtonContainer = () => {
+const ButtonContainer = ({ onBtnClick }) => {
   const buttonNames = [
     "C",
     "1",
@@ -23,7 +24,13 @@ const ButtonContainer = () => {
   return (
     <div className={styles.buttonContainer}>
       {buttonNames.map((btn) => (
-        <button key={btn} className={styles.button}>{btn}</button>
+        <button
+          key={btn}
+          className={styles.button}
+          onClick={() => onBtnClick(btn)}
+        >
+          {btn}
+        </button>
       ))}
     </div>
   );
