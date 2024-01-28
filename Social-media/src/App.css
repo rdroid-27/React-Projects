@@ -1,9 +1,19 @@
-.app-container{
+.app-container {
   display: flex;
 }
-.content{
-  width:100%;
+.content {
+  width: 100%;
 }
-.sidebar{
+.sidebar {
   min-height: 800px;
+}
+.post-card {
+  width: 30rem;
+  margin: 20px 50px;
+}
+.hashtag {
+  margin: 0px 3px;
+}
+.reaction{
+  margin: 15px 0 0 0;
 }
