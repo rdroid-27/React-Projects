@@ -5,6 +5,7 @@ export const PostList = createContext({
   postList: [],
   addPost: () => {},
   deletePost: () => {},
+  addInitialPosts:()=>{}
 });
 
 const postListReducer = (currPostList, action) => {
@@ -13,17 +14,17 @@ const postListReducer = (currPostList, action) => {
     newPostList = currPostList.filter(
       (post) => post.id !== action.payload.postId
     );
-  }else if(action.type === "ADD_POST"){
-     newPostList = [action.payload,...currPostList];
+  } else if (action.type === "ADD_POST") {
+    newPostList = [action.payload, ...currPostList];
+  }
+   else if (action.type === "ADD_INITIAL_POSTS") {
+    newPostList = action.payload.posts;
   }
   return newPostList;
 };
 
 const PostListProvider = ({ children }) => {
-  const [postList, dispatchPostList] = useReducer(
-    postListReducer,
-    DEFAULT_POSTLIST
-  );
+  const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
   const addPost = (userId, postTitle, postBody, reactions, tags) => {
     dispatchPostList({
@@ -39,6 +40,15 @@ const PostListProvider = ({ children }) => {
     });
   };
 
+  const addInitialPosts = (posts) => {
+    dispatchPostList({
+      type: "ADD_INITIAL_POSTS",
+      payload: {
+        posts,
+      },
+    });
+  };
+
   const deletePost = (postId) => {
     dispatchPostList({
       type: "DELETE",
@@ -49,27 +59,12 @@ const PostListProvider = ({ children }) => {
   };
 
   return (
-    <PostList.Provider value={{ postList, addPost, deletePost }}>
+    <PostList.Provider
+      value={{ postList, addPost, deletePost, addInitialPosts }}
+    >
       {children}
     </PostList.Provider>
   );
 };
-const DEFAULT_POSTLIST = [
-  {
-    id: "1",
-    title: "Going to Bangalore",
-    body: "Hi friends, I am going to Bangalore for my vacations. Hope to enjoy a lot. Peace out.",
-    reactions: 2,
-    userId: "user-27",
-    tags: ["vacation", "Bangalore", "Enjoy"],
-  },
-  {
-    id: "2",
-    title: "Done with college",
-    body: "Hi friends, I am going to Bangalore for my vacations. Hope to enjoy a lot. Peace out.",
-    reactions: 10,
-    userId: "user-12",
-    tags: ["Engineering Done", "Unbelievable"],
-  },
-];
+
 export default PostListProvider;
